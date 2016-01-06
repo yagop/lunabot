@@ -47,11 +47,8 @@ run = (robot, response) ->
 
   robot\onTextReply "^/id$", Peer, Peer, (response) ->
     replyId = response.message.replyId
-    -- TODO move to adapter
-    get_message replyId, (extra, ok, resp) ->
-        print "resp:"
-        p resp,
+    response.robot.adapter\message replyId, (extra, ok, message) ->
+        response\send message.from.peer_id,
       {:response}
-    response\send replyId
 
 {:run}

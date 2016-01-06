@@ -17,6 +17,7 @@ class Adapter
   reply: (envelope, string) =>
   topic: (envelope, string) =>
   close: =>
+  -- Get members from peer
   members: (peer, callback, callbackData) =>
     if peer.__class == Chat
       @robot.logger\info "Calling chat_info with id #{peer.id}"
@@ -47,6 +48,10 @@ class Adapter
     else
       assert false
 
+  -- Retrieve a message
+  message: (messageId, callback, extra) =>
+    get_message messageId, callback, extra
+
   receive: (msg) =>
     newUser = (tgUser)  ->
       User tgUser.id, tgUser.peer_id, tgUser.access_hash, tgUser.first_name,
@@ -61,6 +66,7 @@ class Adapter
 
     newPeer = (tgPeer) ->
       tgPeer.type = tgPeer.type or tgPeer.peer_type
+      print tgPeer.type
       peer = if tgPeer.type == "user"
         peer = newUser tgPeer
       elseif tgPeer.type == "chat"
@@ -73,8 +79,11 @@ class Adapter
     @robot.logger\info "New message in adapter"
     if msg.text
       @robot.logger\info "A text message!"
+      @robot.logger\info msg
       fromPeer = newPeer msg.from
+      @robot.logger\info "Message from #{fromPeer.id}"
       toPeer = newPeer msg.to
+      @robot.logger\info "Message to #{toPeer.id}"
       message = if msg.reply_id
         message = Message msg.id, "text_reply", fromPeer, toPeer, msg.date, msg
       else
