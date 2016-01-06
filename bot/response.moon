@@ -6,13 +6,15 @@ class Response
     @envelope =
       from: @message.from
       to: @message.to
+
     if @message.to.__class == Channel or @message.to.__class == Chat
       @envelope.group = @message.to
 
+    groupId = @envelope.group and @envelope.group.id
     @robot.logger\info "Created new response:
       from: #{@message.from.id}
       to: #{@message.to.id}
-      group: #{@envelope.group.id}"
+      group: #{groupId}"
 
   -- Public: Posts a message back to the source
   send: (text, callback, callbackData) =>
