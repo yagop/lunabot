@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/bin/bash
 
 THIS_DIR=$(cd $(dirname $0); pwd)
 LUAROCKS_VERSION="2.2.2"

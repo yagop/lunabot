@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/bin/bash
 THIS_DIR=$(cd $(dirname $0); pwd)
 
 export TELEGRAM_HOME=$THIS_DIR
