@@ -1,5 +1,6 @@
 /logs
 /luarocks
+/.telegram-cli
 
 # Compiled Lua sources
 luac.out
