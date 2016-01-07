@@ -25,3 +25,12 @@ class Response
       @message.to
     @robot.logger\info "The response goes to a #{peer.__class.__name}"
     @robot.adapter\send peer, text, callback, callbackData
+
+  -- Kicks user from Channel or Chat
+  kick: (peerId) =>
+    if @message.to.__class == Chat
+      @robot.adapter\chatKick @envelope.group.id, peerId, callback, callbackData
+    else if @message.to.__class == Channel
+      @robot.adapter\channelKick @envelope.group.id, peerId, callback, callbackData
+    else
+      assert false

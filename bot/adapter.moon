@@ -90,6 +90,15 @@ class Adapter
         message = Message msg.id, "text", fromPeer, toPeer, msg.date, msg
       @robot\receive message
 
+  --- Kicks a user from a chat
+  chatKick: (chatId, userId, callback, extra) =>
+    @robot.logger\info "Kicking #{userId} from #{chatId}"
+    chat_del_user chatId, userId, callback, extra
+
+  --- Kicks a user from a channel
+  channelKick: (channelId, userId, callback, extra) =>
+    @robot.logger\info "Kicking #{userId} from #{channelId}"
+    channel_kick_user channelId, userId, callback, extra
 
 run = (robot) ->
   -- Global functions
