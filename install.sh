@@ -17,6 +17,7 @@ install_luarocks() {
   make install || exit
   cd ..
   rm -rf "luarocks-$LUAROCKS_VERSION"
+  rm -rf "luarocks"
 }
 
 install_luarocks_packages() {
@@ -24,6 +25,7 @@ install_luarocks_packages() {
   "$LUAROCKS_DIR/bin/luarocks" install moonscript || exit
   "$LUAROCKS_DIR/bin/luarocks" install lualogging || exit
   "$LUAROCKS_DIR/bin/luarocks" install luafilesystem || exit
+  "$LUAROCKS_DIR/bin/luarocks" install redis-lua || exit
 }
 
 install_luarocks $LUAROCKS_VERSION $LUAROCKS_DIR

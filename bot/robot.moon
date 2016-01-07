@@ -4,6 +4,7 @@ Response = require "bot.response"
 adapter = require "bot.adapter"
 Plugins = require "bot.plugins"
 Peers = require "bot.peers"
+Redis = require "bot.redis"
 import p from require "moon"
 
 class Robot
@@ -13,6 +14,7 @@ class Robot
     @logger = logging.new((level, message) =>
       print message)
     @logger\info "Robot started"
+    @redis = (Redis @).client
     @adapter = adapter.run @
     @plugins = Plugins @
     @plugins\load!
@@ -33,7 +35,7 @@ class Robot
               return matches
     listener = Listener @, matcher, callback
     table.insert @listeners, listener
-              
+
   onTextReply: (pattern, fromPeerType, toPeerType, callback) =>
     text = "New text_reply matcher #{pattern} #{fromPeerType.__class.__name}"
     text ..= " #{toPeerType.__class.__name}"
