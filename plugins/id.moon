@@ -1,7 +1,7 @@
 import Peer, User, Chat, Channel, Group from require "bot.peers"
 import p from require "moon"
 
-run = (robot, response) ->
+run = (robot) ->
   robot\onText "^/id$", User, User, (response) ->
     id = response.envelope.from.id
     response\send id
@@ -47,8 +47,8 @@ run = (robot, response) ->
 
   robot\onTextReply "^/id$", Peer, Peer, (response) ->
     replyId = response.message.replyId
-    response.robot.adapter\message replyId, (extra, ok, message) ->
+    response.robot.adapter\message replyId, (response, ok, message) ->
         response\send message.from.peer_id,
-      {:response}
+      response
 
 {:run}
