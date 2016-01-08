@@ -100,6 +100,14 @@ class Adapter
     @robot.logger\info "Kicking #{userId} from #{channelId}"
     channel_kick_user channelId, userId, callback, extra
 
+  chatInfo: (chatId, callback, extra) =>
+    @robot.logger\info "chatInfo #{channelId}"
+    chat_info chatId, callback, extra
+    
+  channelAdmins: (channelId, callback, extra) =>
+    @robot.logger\info "channelAdmins #{channelId}"
+    channel_get_admins channelId, callback, extra
+
 run = (robot) ->
   -- Global functions
   export on_our_id, on_binlog_replay_end, on_get_difference_end
