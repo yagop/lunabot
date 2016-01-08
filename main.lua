@@ -38,7 +38,7 @@ elseif not (moonscript_chunk) then
   if lua_parse_error then
     print_err(lua_parse_error)
   else
-    print_err("Can't file file: " .. tostring(script_fname))
+    print_err("Can't open file: " .. tostring(script_fname))
   end
 else
   local run_chunk
