@@ -12,5 +12,5 @@ class Redis
     --@robot.logger\debug "Redis host: #{params.host}"
     --@robot.logger\debug "Redis port: #{params.port}"
     @client = redis.connect params
-    client\auth params.password if params.password
+    @client\auth params.password if params.password
     -- TODO: fake redis
