@@ -48,7 +48,8 @@ run = (robot) ->
   robot\onTextReply "^/id$", Peer, Peer, (response) ->
     replyId = response.message.replyId
     response.robot.adapter\message replyId, (response, ok, message) ->
-        response\send message.from.peer_id,
+        response\send message.from.peer_id
+        response\send message.from.id,
       response
 
 {:run}

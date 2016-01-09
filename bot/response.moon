@@ -29,10 +29,13 @@ class Response
   -- Kicks user from Channel or Chat
   kick: (peerId) =>
     if @message.to.__class == Chat
+      @robot.logger\info "Kicking #{peerId} from chat #{@envelope.group.id}"
       @robot.adapter\chatKick @envelope.group.id, peerId, callback, callbackData
     else if @message.to.__class == Channel
+      @robot.logger\info "Kicking #{peerId} from channel #{@envelope.group.id}"
       @robot.adapter\channelKick @envelope.group.id, peerId, callback, callbackData
     else
+      @robot.logger\info "Kick not implemented for class #{@message.to.__class.__name}"
       assert false
 
   --- Returns true if peerId is admin of a channel or chat.

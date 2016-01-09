@@ -93,13 +93,13 @@ class Adapter
   --- Kicks a user from a chat
   chatKick: (chatId, userId, callback, extra) =>
     callback = callback or ok_cb
-    @robot.logger\info "Kicking #{userId} from #{chatId}"
+    @robot.logger\info "Kicking #{userId} from chat #{chatId}"
     chat_del_user chatId, userId, callback, extra
 
   --- Kicks a user from a channel
   channelKick: (channelId, userId, callback, extra) =>
     callback = callback or ok_cb
-    @robot.logger\info "Kicking #{userId} from #{channelId}"
+    @robot.logger\info "Kicking #{userId} from channel #{channelId}"
     channel_kick_user channelId, userId, callback, extra
 
   chatInfo: (chatId, callback, extra) =>
