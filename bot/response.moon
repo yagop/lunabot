@@ -42,7 +42,7 @@ class Response
     -- The bot itself
     if peerId == @robot.adapter.ourId and false
       @robot.logger\info "Bot is admin of himself."
-      callback callbackData, true, nil
+      callback callbackData, true, nil if extra.callback
     else
       if @message.to.__class == Chat -- Check if bot was invited by that member
         @robot.logger\info "isBotAdmin Chat"
@@ -56,23 +56,24 @@ class Response
                 inviterPeerId = bot.inviter.peer_id
                 if inviterPeerId == extra.peerId -- Bot inviter is provided peerId
                   @robot.logger\info "Bot was invited by #{inviterPeerId}"
-                  extra.callback extra.callbackData, ok, true
+                  extra.callback extra.callbackData, ok, true if extra.callback
                 else
                   @robot.logger\info "Bot wasn't invited by #{inviterPeerId}"
-                  extra.callback extra.callbackData, ok, false
+                  extra.callback extra.callbackData, ok, false if extra.callback
               else
                 @robot.logger\info "Bot not found or wasen't invited"
-                extra.callback extra.callbackData, ok, false
+                extra.callback extra.callbackData, ok, false if extra.callback
             else
               @robot.logger\error "chatInfo failed!"
-              extra.callback extra.callbackData, ok, nil,
+              extra.callback extra.callbackData, ok, nil if extra.callback,
           {:callback, :callbackData, :peerId}
       else if @message.to.__class == Channel
+        -- Get channel admins
         @robot.logger\info "isBotAdmin Channel"
         @robot.adapter\channelAdmins @envelope.group.id, (extra, ok, admins) ->
             if not ok -- Error ...
               @robot.logger\info "Can't get Channel #{@envelope.group.id} admins"
-              extra.callback extra.callbackData, ok, nil
+              extra.callback extra.callbackData, ok, nil if extra.callback
             else
               found = false
               for _, admin in pairs admins
@@ -81,9 +82,8 @@ class Response
                   @robot.logger\info "#{extra.peerId} is #{@envelope.group.id} admin"
               if not found
                 @robot.logger\info "#{extra.peerId} isn't #{@envelope.group.id} admin"
-              extra.callback extra.callbackData, ok, found,
+              extra.callback extra.callbackData, ok, found if extra.callback,
           {:callback, :callbackData, :peerId}
-        -- Get channel admins
       else
         @robot.logger\error "Unsuported message to class in isBotAdmin"
         assert false
